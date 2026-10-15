@@ -41,7 +41,7 @@ nav{position:relative;z-index:5;display:flex;justify-content:space-between;align
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .card{background:none;border:0;padding:0;text-align:left;color:inherit}
 .ph{position:relative;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:var(--img);background-repeat:no-repeat;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.ph::after{content:"© Tantara Tany   © Tantara Tany   © Tantara Tany   © Tantara Tany   © Tantara Tany   © Tantara Tany   © Tantara Tany   © Tantara Tany";position:absolute;inset:-30%;display:flex;flex-wrap:wrap;gap:34px;align-content:center;transform:rotate(-24deg);color:#ffffff55;font:600 15px Figtree,sans-serif;white-space:pre;pointer-events:none}
+
 .card h3{font-size:1.35rem;margin-top:10px}
 .card small{color:var(--mut)}
 .note{color:var(--mut);font-size:.85rem;margin-top:20px}
@@ -61,7 +61,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 .meta{color:var(--mut);font-size:.92rem;margin:4px 0 12px}
 @media(max-width:760px){.welcome{grid-template-columns:1fr;gap:28px}nav{flex-wrap:wrap}.nr a.l{padding:4px 6px;font-size:.82rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}</style></head><body>
+[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}.ph{background:none;aspect-ratio:auto}.ph img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}.grid{align-items:start}#photo{width:min(900px,96vw)}.ph.big{margin-bottom:16px}</style></head><body>
 <nav>
  <a class="logo" href="#">Tantara Tany</a>
  <div class="nr">
@@ -143,7 +143,7 @@ const sb=CFG.url.startsWith('VOTRE')?null:supabase.createClient(CFG.url,CFG.key)
 let L='fr',user=null,prof=null,P=[],cur='all',mode='login',cp=null,cv=null,convs=[],timer=null;
 const $=id=>document.getElementById(id),t=(f,e)=>L==='fr'?f:e,isAdm=()=>prof&&prof.role==='admin';
 const prevUrl=p=>sb.storage.from('previews').getPublicUrl(p.preview_path).data.publicUrl;
-const bg=(el,p)=>{el.style.background='url("'+prevUrl(p)+'") center/cover'};
+const bg=(el,p)=>{el.style.background='none';el.innerHTML='<img alt="" draggable="false">';el.firstChild.src=prevUrl(p)};
 function render(){
  document.documentElement.lang=L;
  document.querySelectorAll('[data-fr]').forEach(e=>e.textContent=e.getAttribute('data-'+L));
@@ -232,12 +232,12 @@ $('mkinv').onclick=async()=>{
  $('iamt').value='';m.textContent='';loadThread()};
 // ---- Administration ----
 async function mkPreview(f){
- const im=await createImageBitmap(f),s=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');
+ const im=await createImageBitmap(f),s=Math.min(1,4096/Math.max(im.width,im.height)),c=document.createElement('canvas');
  c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
- const x=c.getContext('2d'),fs=Math.max(16,c.width/24),d=Math.hypot(c.width,c.height);
- x.drawImage(im,0,0,c.width,c.height);x.fillStyle='rgba(255,255,255,.4)';x.font='600 '+fs+'px sans-serif';x.rotate(-.42);
- for(let yy=-d;yy<d;yy+=fs*3.5)for(let xx=-d;xx<d;xx+=fs*9)x.fillText('© Tantara Tany',xx,yy);
- return new Promise(r=>c.toBlob(r,'image/jpeg',.6))}
+ const x=c.getContext('2d'),fs=Math.max(16,c.width/26),d=Math.hypot(c.width,c.height);
+ x.drawImage(im,0,0,c.width,c.height);x.fillStyle='rgba(255,255,255,.22)';x.font='600 '+Math.max(18,c.width/16)+'px sans-serif';x.textAlign='center';x.textBaseline='middle';
+ [[.5,.5],[.2,.2],[.8,.8]].forEach(p=>{x.save();x.translate(c.width*p[0],c.height*p[1]);x.rotate(-.42);x.fillText('© Tantara Tany',0,0);x.restore()});
+ return new Promise(r=>c.toBlob(r,'image/jpeg',.92))}
 $('aup').onclick=async()=>{
  const f=$('af').files[0],m=$('amsg2'),v=i=>$(i).value.trim();
  if(!f||!v('at_fr')){m.textContent='Titre et photo requis.';return}
