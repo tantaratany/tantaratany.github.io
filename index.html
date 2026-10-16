@@ -61,11 +61,11 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 .meta{color:var(--mut);font-size:.92rem;margin:4px 0 12px}
 @media(max-width:760px){.welcome{grid-template-columns:1fr;gap:28px}nav{flex-wrap:wrap}.nr a.l{padding:4px 6px;font-size:.82rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}.ph{background:none;aspect-ratio:auto}.ph img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}.grid{align-items:start}#photo{width:min(900px,96vw)}.ph.big{margin-bottom:16px}.db ol{margin:0 0 20px;padding-left:20px;color:var(--mut)}.db ol li{margin:6px 0}</style></head><body>
+[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}.ph{background:none;aspect-ratio:auto}.ph img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}.grid{align-items:start}#photo{width:min(900px,96vw)}.ph.big{margin-bottom:16px}.db ol{margin:0 0 20px;padding-left:20px;color:var(--mut)}.db ol li{margin:6px 0}input[type=checkbox]{width:auto;margin:3px 0 0}label.chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink);margin:14px 0}</style></head><body>
 <nav>
  <a class="logo" href="#">Tantara Tany</a>
  <div class="nr">
-  <a class="l" href="#galerie" data-fr="Galerie" data-en="Gallery"></a><a class="l" href="#" data-page="artistes" data-fr="Artistes" data-en="Artists"></a><a class="l" href="#" data-page="apropos" data-fr="À propos" data-en="About"></a><a class="l" href="#" data-page="licences" data-fr="Licences" data-en="Licenses"></a><a class="l" href="#" data-page="contact" data-fr="Contact" data-en="Contact"></a>
+  <a class="l" href="#galerie" data-fr="Galerie" data-en="Gallery"></a><a class="l" href="#" data-page="artistes" data-fr="Artistes" data-en="Artists"></a><a class="l" href="#" data-page="apropos" data-fr="À propos" data-en="About"></a><a class="l" href="#" data-page="licences" data-fr="Licences" data-en="Licenses"></a><a class="l" href="#" data-page="photographe" data-fr="Devenir photographe" data-en="Become a photographer"></a><a class="l" href="#" data-page="contact" data-fr="Contact" data-en="Contact"></a>
   <div class="lang" role="group" aria-label="Langue / Language"><button data-l="fr" aria-pressed="true">FR</button><button data-l="en" aria-pressed="false">EN</button></div>
   <button class="btn" id="bmsg" hidden>Messages</button><button class="btn" id="badm" hidden>Admin</button><button class="btn" id="bauth"></button>
  </div>
@@ -129,13 +129,31 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 <div class="cols"><div class="box"><h3 data-fr="Usage personnel" data-en="Personal use"></h3><p data-fr="Impression, décoration, partage non commercial. Le nom de l'auteur reste crédité." data-en="Printing, decor, non-commercial sharing. The author stays credited."></p></div><div class="box"><h3 data-fr="Usage commercial" data-en="Commercial use"></h3><p data-fr="Site web, publicité, produits, publication. Précisé dans la facture." data-en="Website, advertising, products, publishing. Stated in the invoice."></p></div></div></div></dialog>
 <dialog id="pg_contact"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3 data-fr="Contact" data-en="Contact"></h3>
 <p style="color:var(--mut);margin:14px 0 0" data-fr="Pour acheter ou poser une question sur une photo, ouvrez-la et appuyez sur « Contacter pour acheter ». Pour signaler une photo ou toute autre demande, une adresse de contact sera ajoutée ici très bientôt." data-en="To buy or ask about a photo, open it and tap “Message us to buy”. To report a photo or for any other request, a contact address will be added here very soon."></p></div></dialog>
+<dialog id="pg_photographe" style="width:min(640px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3 data-fr="Devenir photographe partenaire" data-en="Become a partner photographer"></h3>
+<div id="ph_login"><p style="color:var(--mut)" data-fr="Créez d'abord un compte ou connectez-vous, puis revenez ici." data-en="First create an account or log in, then come back here."></p><button class="btn p" id="ph_loginbtn" data-fr="Créer un compte / Se connecter" data-en="Create an account / Log in"></button></div>
+<div id="ph_reg" hidden><p style="color:var(--mut)" data-fr="Ces informations restent privées : seul votre pseudo s'affiche avec vos photos." data-en="This information stays private: only your artist name appears with your photos."></p>
+<label for="r_pseudo" data-fr="Pseudo d'artiste (affiché)" data-en="Artist name (shown)"></label><input id="r_pseudo" maxlength="40">
+<label for="r_name" data-fr="Nom complet (privé)" data-en="Full name (private)"></label><input id="r_name" autocomplete="name">
+<label for="r_phone" data-fr="Téléphone (privé)" data-en="Phone (private)"></label><input id="r_phone" type="tel">
+<label for="r_mail" data-fr="E-mail de contact (privé)" data-en="Contact email (private)"></label><input id="r_mail" type="email">
+<label for="r_mvola" data-fr="Numéro MVola pour recevoir vos 85 %" data-en="MVola number to receive your 85%"></label><input id="r_mvola" type="tel">
+<ol style="margin-top:16px"><li data-fr="Vous êtes l'auteur des photos que vous envoyez." data-en="You are the author of the photos you send."></li><li data-fr="Vous autorisez Tantara Tany à les exposer et à les vendre sous licence." data-en="You authorize Tantara Tany to display and sell them under license."></li><li data-fr="Tantara Tany garde 15 % de chaque vente. Vous recevez 85 % par MVola." data-en="Tantara Tany keeps 15% of each sale. You receive 85% by MVola."></li><li data-fr="Le prix minimum d'une photo est de 10 $." data-en="The minimum price of a photo is $10."></li><li data-fr="Vos contacts ne sont jamais publics. Seul votre pseudo s'affiche avec vos photos." data-en="Your contact details are never public. Only your artist name appears with your photos."></li></ol>
+<label class="chk"><input type="checkbox" id="r_ok"><span data-fr="J'ai lu et j'accepte ces conditions." data-en="I have read and accept these terms."></span></label>
+<button class="btn p" id="ph_regbtn" data-fr="M'inscrire comme photographe" data-en="Register as a photographer"></button><div class="msg" id="ph_regmsg" role="status"></div></div>
+<div id="ph_sub" hidden><p style="color:var(--mut)" data-fr="Chaque photo est publiée après validation par Tantara Tany." data-en="Each photo is published after review by Tantara Tany."></p>
+<label for="s_tfr" data-fr="Titre (FR)" data-en="Title (FR)"></label><input id="s_tfr"><label for="s_ten" data-fr="Titre (EN)" data-en="Title (EN)"></label><input id="s_ten">
+<label for="s_loc" data-fr="Lieu" data-en="Place"></label><input id="s_loc"><label for="s_reg" data-fr="Région ou thème" data-en="Region or theme"></label><input id="s_reg">
+<label for="s_dfr" data-fr="Description (FR)" data-en="Description (FR)"></label><input id="s_dfr"><label for="s_den" data-fr="Description (EN)" data-en="Description (EN)"></label><input id="s_den">
+<label for="s_file" data-fr="Photo originale" data-en="Original photo"></label><input id="s_file" type="file" accept="image/*">
+<p><button class="btn p" id="ph_up" data-fr="Envoyer la photo" data-en="Send the photo"></button></p><div class="msg" id="ph_upmsg" role="status"></div>
+<h3 style="margin-top:18px" data-fr="Mes photos" data-en="My photos"></h3><div id="ph_list"></div></div></div></dialog>
 <dialog id="msgs" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3 data-fr="Messages" data-en="Messages"></h3>
 <div class="cl" id="clist"></div><div class="thr" id="thread" hidden></div>
 <div id="mbox" hidden><div class="ri"><input id="mtxt" maxlength="2000"><button class="btn p" id="send" data-fr="Envoyer" data-en="Send"></button></div><div class="msg" id="smsg" role="status"></div>
 <div id="inv" hidden><label for="iamt">Prix convenu en $ (minimum 10)</label><div class="ri"><input id="iamt" type="number" min="10" step="0.01"><button class="btn" id="mkinv">Envoyer la facture</button></div><div class="msg" id="imsg"></div></div></div></div></dialog>
 <dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Ajouter une photo</h3>
 <label for="at_fr">Titre (FR)</label><input id="at_fr"><label for="at_en">Titre (EN)</label><input id="at_en"><label for="al">Lieu</label><input id="al"><label for="ar">Région ou thème</label><input id="ar"><label for="ad_fr">Description (FR)</label><input id="ad_fr"><label for="ad_en">Description (EN)</label><input id="ad_en"><label for="aa">Photographe</label><input id="aa" value="Tantara Tany"><label for="af">Photo originale</label><input id="af" type="file" accept="image/*">
-<p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Photos publiées</h3><div class="msg" id="plmsg" role="status"></div><div id="plist"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
+<p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Soumissions à valider</h3><div id="sublist"></div><h3>Photos publiées</h3><div class="msg" id="plmsg" role="status"></div><div id="plist"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 // ====== CONFIGURATION : à remplir (voir GUIDE.md) ======
@@ -172,13 +190,14 @@ function gallery(){
 }
 async function loadPhotos(){if(!sb)return;const r=await sb.from('photos').select('*').order('created_at',{ascending:false});P=(r.data||[]).filter(p=>p.status==='published');gallery()}
 function openPhoto(p){cp=p;bg($('pbig'),p);$('pt').textContent=p['title_'+L]||p.title_fr;
- $('pm').textContent=[p.location,'© '+(p.artist||'Tantara Tany')].filter(Boolean).join(' · ');
+ $('pm').textContent=[p.location,p.artist||'Tantara Tany'].filter(Boolean).join(' · ');
  $('pd').textContent=p['desc_'+L]||p.desc_fr||'';$('pmsg').textContent='';$('photo').showModal()}
 function setAuth(){const s=mode==='signup';
  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===mode));
  $('f-name').style.display=s?'block':'none';
  $('go').textContent=s?t('Créer mon compte','Create my account'):t('Me connecter','Log in')}
-async function loadProf(){prof=null;if(user){const r=await sb.from('profiles').select('*').eq('id',user.id).single();prof=r.data}nav()}
+let phg=null;
+async function loadProf(){prof=null;phg=null;if(user){const r=await sb.from('profiles').select('*').eq('id',user.id).single();prof=r.data;const g=await sb.from('photographers').select('*').eq('id',user.id).maybeSingle();phg=g.data}nav()}
 if(sb){sb.auth.onAuthStateChange((_,s)=>{user=s?s.user:null;setTimeout(loadProf,0)});
  sb.auth.getSession().then(r=>{if(r.data.session){user=r.data.session.user;loadProf()}})}
 $('go').onclick=async()=>{
@@ -264,32 +283,74 @@ function listPhotos(){
   const x=document.createElement('button');x.className='btn';x.textContent='Supprimer';x.onclick=()=>deletePhoto(p);
   d.append(f,r,' ',x);l.appendChild(d)})}
 async function replacePhoto(p,f){
- if(!f)return;const m=$('plmsg');m.textContent='Remplacement en cours…';
+ if(!f)return;const m=msgEl();m.textContent='Remplacement en cours…';
  const id=crypto.randomUUID(),ext=(f.name.split('.').pop()||'jpg').toLowerCase();
  const a=await sb.storage.from('previews').upload(id+'.jpg',await mkPreview(f),{contentType:'image/jpeg'});
  const b=await sb.storage.from('originals').upload(id+'.'+ext,f);
  if(a.error||b.error){m.textContent=(a.error||b.error).message;return}
- const r=await sb.from('photos').update({preview_path:id+'.jpg',original_path:id+'.'+ext}).eq('id',p.id);
+ const r=await sb.from('photos').update({preview_path:id+'.jpg',original_path:id+'.'+ext,...(isAdm()?{}:{status:'pending'})}).eq('id',p.id);
  if(r.error){m.textContent=r.error.message;return}
  await sb.storage.from('previews').remove([p.preview_path]);await sb.storage.from('originals').remove([p.original_path]);
- m.textContent='Image remplacée.';await loadPhotos();listPhotos()}
+ m.textContent='Image remplacée.';await loadPhotos();listPhotos();if(phg&&!isAdm())myPhotos()}
 async function deletePhoto(p){
- if(!confirm('Supprimer « '+p.title_fr+' » ?'))return;const m=$('plmsg');
+ if(!confirm('Supprimer « '+p.title_fr+' » ?'))return;const m=msgEl();
  const r=await sb.from('photos').delete().eq('id',p.id);
  if(r.error){await sb.from('photos').update({status:'hidden'}).eq('id',p.id);m.textContent='Cette photo a des discussions ou des commandes : elle est masquée, pas supprimée.'}
  else{await sb.storage.from('previews').remove([p.preview_path]);await sb.storage.from('originals').remove([p.original_path]);m.textContent='Photo supprimée.'}
- await loadPhotos();listPhotos()}
+ await loadPhotos();listPhotos();if(phg&&!isAdm())myPhotos()}
 async function loadOrders(){
- const r=await sb.from('orders').select('*,photos(title_fr),profiles(name)').order('created_at',{ascending:false}),l=$('olist');l.innerHTML='';
+ const r=await sb.from('orders').select('*,photos(title_fr,artist,photographers(mvola)),profiles(name)').order('created_at',{ascending:false}),l=$('olist');l.innerHTML='';
  (r.data||[]).forEach(o=>{const d=document.createElement('div');d.className='box';
-  d.textContent=((o.profiles&&o.profiles.name)||'Client')+' · '+o.photos.title_fr+' · '+o.price+' $ (montant à recevoir : '+o.pay_amount+' $) · '+(o.status==='paid'?'PAYÉ':'En attente')+' · Photographe '+(o.price*.85).toFixed(2)+' $ / Site '+(o.price*.15).toFixed(2)+' $ · Reversement : '+(o.payout==='done'?'fait':'à faire');
+  d.textContent=((o.profiles&&o.profiles.name)||'Client')+' · '+o.photos.title_fr+' · '+o.price+' $ (montant à recevoir : '+o.pay_amount+' $) · '+(o.status==='paid'?'PAYÉ':'En attente')+' · Photographe '+(o.photos.artist?o.photos.artist+' (MVola '+((o.photos.photographers&&o.photos.photographers.mvola)||'—')+') ':'')+(o.price*.85).toFixed(2)+' $ / Site '+(o.price*.15).toFixed(2)+' $ · Reversement : '+(o.payout==='done'?'fait':'à faire');
   const up=(patch,lab)=>{const b=document.createElement('button');b.className='btn';b.textContent=lab;
    b.onclick=async()=>{await sb.from('orders').update(patch).eq('id',o.id);loadOrders()};d.append(' ',b)};
   if(o.status==='pending')up({status:'paid',paid_at:new Date().toISOString()},'Marquer payé');
   else if(o.payout==='todo')up({payout:'done'},'Reversement fait');
   l.appendChild(d)})}
-$('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos()};
+$('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos();loadSubs()};
 $('bmsg').onclick=()=>openMsgs();
+const msgEl=()=>isAdm()?$('plmsg'):$('ph_upmsg');
+async function loadSubs(){
+ const r=await sb.from('photos').select('*,photographers(pseudo,full_name,phone,contact_email,mvola)').eq('status','pending').order('created_at'),l=$('sublist');l.innerHTML='';
+ if(!(r.data||[]).length)l.textContent='Aucune soumission.';
+ (r.data||[]).forEach(p=>{const d=document.createElement('div');d.className='box';const g=p.photographers||{};
+  const im=document.createElement('div');im.className='ph';im.style.maxWidth='260px';im.style.marginBottom='8px';bg(im,p);
+  const tx=document.createElement('div');tx.textContent=p.title_fr+' / '+p.title_en+' · '+(p.location||'')+' · '+(p.region||'')+' · '+(p.desc_fr||'')+' — Pseudo : '+(g.pseudo||'')+' · Nom : '+(g.full_name||'')+' · Tél : '+(g.phone||'')+' · E-mail : '+(g.contact_email||'')+' · MVola : '+(g.mvola||'');
+  const act=(st,lab)=>{const b=document.createElement('button');b.className='btn';b.textContent=lab;b.onclick=async()=>{const u=await sb.from('photos').update({status:st}).eq('id',p.id);if(u.error){alert(u.error.message);return}await loadPhotos();loadSubs();listPhotos()};return b};
+  d.append(im,tx,document.createElement('br'),act('published','Publier'),' ',act('rejected','Refuser'));l.appendChild(d)})}
+function openPhg(){
+ $('ph_login').hidden=!!user;$('ph_reg').hidden=!user||!!phg;$('ph_sub').hidden=!phg;
+ if(!$('pg_photographe').open)$('pg_photographe').showModal();
+ if(phg)myPhotos()}
+$('ph_loginbtn').onclick=()=>{$('pg_photographe').close();mode='signup';setAuth();$('auth').showModal()};
+$('ph_regbtn').onclick=async()=>{
+ const v=i=>$(i).value.trim(),m=$('ph_regmsg');
+ if(!v('r_pseudo')||!v('r_name')||!v('r_phone')||!v('r_mail')||!v('r_mvola')){m.textContent=t('Remplissez tous les champs.','Fill in all fields.');return}
+ if(!$('r_ok').checked){m.textContent=t('Acceptez les conditions.','Please accept the terms.');return}
+ const r=await sb.from('photographers').insert({id:user.id,pseudo:v('r_pseudo'),full_name:v('r_name'),phone:v('r_phone'),contact_email:v('r_mail'),mvola:v('r_mvola')}).select().single();
+ if(r.error){m.textContent=r.error.message;return}
+ phg=r.data;m.textContent='';openPhg()};
+$('ph_up').onclick=async()=>{
+ const f=$('s_file').files[0],m=$('ph_upmsg'),v=i=>$(i).value.trim();
+ if(!f||!v('s_tfr')){m.textContent=t('Titre et photo requis.','Title and photo required.');return}
+ m.textContent=t('Envoi en cours…','Uploading…');
+ const id=crypto.randomUUID(),ext=(f.name.split('.').pop()||'jpg').toLowerCase();
+ const a=await sb.storage.from('previews').upload(id+'.jpg',await mkPreview(f),{contentType:'image/jpeg'});
+ const b=await sb.storage.from('originals').upload(id+'.'+ext,f);
+ if(a.error||b.error){m.textContent=(a.error||b.error).message;return}
+ const r=await sb.from('photos').insert({title_fr:v('s_tfr'),title_en:v('s_ten')||v('s_tfr'),location:v('s_loc'),region:v('s_reg'),desc_fr:v('s_dfr'),desc_en:v('s_den'),artist:phg.pseudo,owner_id:user.id,status:'pending',preview_path:id+'.jpg',original_path:id+'.'+ext});
+ if(r.error){m.textContent=r.error.message;return}
+ m.textContent=t('Photo envoyée. Elle sera publiée après validation.','Photo sent. It will be published after review.');
+ ['s_tfr','s_ten','s_loc','s_reg','s_dfr','s_den','s_file'].forEach(i=>$(i).value='');myPhotos()};
+const SL={pending:['En attente de validation','Pending review'],published:['Publiée','Published'],rejected:['Refusée','Rejected'],hidden:['Masquée','Hidden']};
+async function myPhotos(){
+ const r=await sb.from('photos').select('*').eq('owner_id',user.id).order('created_at',{ascending:false}),l=$('ph_list');l.innerHTML='';
+ (r.data||[]).forEach(p=>{const d=document.createElement('div');d.className='box';
+  d.textContent=p.title_fr+' · '+(SL[p.status]||[p.status,p.status])[L==='fr'?0:1]+' ';
+  const f=document.createElement('input');f.type='file';f.accept='image/*';f.hidden=true;f.onchange=()=>replacePhoto(p,f.files[0]);
+  const rb=document.createElement('button');rb.className='btn';rb.textContent=t("Remplacer l'image",'Replace image');rb.onclick=()=>f.click();
+  const xb=document.createElement('button');xb.className='btn';xb.textContent=t('Supprimer','Delete');xb.onclick=()=>deletePhoto(p);
+  d.append(f,rb,' ',xb);l.appendChild(d)})}
 // ---- Interface ----
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{L=b.dataset.l;render()});
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{mode=b.dataset.open;setAuth();$('amsg').textContent='';$('auth').showModal()});
@@ -298,6 +359,6 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('di
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
 document.querySelectorAll('[data-soon]').forEach(b=>b.onclick=()=>{b.nextElementSibling.textContent=t('Écrivez-nous depuis la fiche d\'une photo, après connexion.','Message us from a photo page, after logging in.')});
 ['contextmenu','dragstart'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.closest&&e.target.closest('.ph,.card'))e.preventDefault()}));
-document.querySelectorAll('[data-page]').forEach(a=>a.onclick=e=>{e.preventDefault();document.querySelectorAll('dialog[open]').forEach(d=>d.close());$('pg_'+a.dataset.page).showModal()});
+document.querySelectorAll('[data-page]').forEach(a=>a.onclick=e=>{e.preventDefault();document.querySelectorAll('dialog[open]').forEach(d=>d.close());if(a.dataset.page==='photographe')openPhg();else $('pg_'+a.dataset.page).showModal()});
 render();loadPhotos();
 </script></body></html>
