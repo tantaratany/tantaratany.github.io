@@ -129,7 +129,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 
 <dialog id="msgs" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3 data-fr="Messages" data-en="Messages"></h3>
 <div class="cl" id="clist"></div><div class="thr" id="thread" hidden></div>
-<div id="mbox" hidden><div class="ri"><input id="mtxt" maxlength="2000"><button class="btn p" id="send" data-fr="Envoyer" data-en="Send"></button></div>
+<div id="mbox" hidden><div class="ri"><input id="mtxt" maxlength="2000"><button class="btn p" id="send" data-fr="Envoyer" data-en="Send"></button></div><div class="msg" id="smsg" role="status"></div>
 <div id="inv" hidden><label for="iamt">Prix convenu en $ (minimum 10)</label><div class="ri"><input id="iamt" type="number" min="10" step="0.01"><button class="btn" id="mkinv">Envoyer la facture</button></div><div class="msg" id="imsg"></div></div></div></div></dialog>
 <dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Ajouter une photo</h3>
 <label for="at_fr">Titre (FR)</label><input id="at_fr"><label for="at_en">Titre (EN)</label><input id="at_en"><label for="al">Lieu</label><input id="al"><label for="ar">Région ou thème</label><input id="ar"><label for="ad_fr">Description (FR)</label><input id="ad_fr"><label for="ad_en">Description (EN)</label><input id="ad_en"><label for="aa">Photographe</label><input id="aa" value="Tantara Tany"><label for="af">Photo originale</label><input id="af" type="file" accept="image/*">
@@ -186,7 +186,7 @@ $('go').onclick=async()=>{
  if(r.error){m.textContent=r.error.message;return}
  if(mode==='signup'&&!r.data.session){m.textContent=t('Vérifiez votre e-mail pour confirmer le compte.','Check your email to confirm your account.');return}
  $('auth').close()};
-$('bauth').onclick=()=>{if(user)sb.auth.signOut();else{mode='login';setAuth();$('auth').showModal()}};
+$('bauth').onclick=async()=>{if(user){document.querySelectorAll('dialog[open]').forEach(d=>d.close());try{await sb.auth.signOut({scope:'local'})}catch(e){}user=null;prof=null;nav()}else{mode='login';setAuth();$('auth').showModal()}};
 $('contact').onclick=async()=>{
  if(!user){mode='login';setAuth();$('photo').close();$('auth').showModal();return}
  let r=await sb.from('conversations').select('id').eq('client_id',user.id).eq('photo_id',cp.id).maybeSingle();
@@ -220,8 +220,13 @@ async function loadThread(){
   else d.textContent=x.body;
   th.appendChild(d)});
  th.scrollTop=th.scrollHeight}
-$('send').onclick=async()=>{const v=$('mtxt').value.trim();if(!v||!cv)return;$('mtxt').value='';
- await sb.from('messages').insert({conv_id:cv,body:v});loadThread()};
+$('send').onclick=sendMsg;
+$('mtxt').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
+async function sendMsg(){const v=$('mtxt').value.trim(),m=$('smsg');if(!v)return;m.textContent='';
+ if(!cv){m.textContent="Choisissez d'abord une discussion.";return}
+ const r=await sb.from('messages').insert({conv_id:cv,body:v});
+ if(r.error){m.textContent='Erreur : '+r.error.message;return}
+ $('mtxt').value='';loadThread()}
 $('mkinv').onclick=async()=>{
  const price=parseFloat($('iamt').value),c=convs.find(x=>x.id===cv),m=$('imsg');
  if(!(price>=10)){m.textContent='Le prix minimum est 10 $.';return}
