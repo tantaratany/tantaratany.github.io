@@ -133,7 +133,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 <div id="inv" hidden><label for="iamt">Prix convenu en $ (minimum 10)</label><div class="ri"><input id="iamt" type="number" min="10" step="0.01"><button class="btn" id="mkinv">Envoyer la facture</button></div><div class="msg" id="imsg"></div></div></div></div></dialog>
 <dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Ajouter une photo</h3>
 <label for="at_fr">Titre (FR)</label><input id="at_fr"><label for="at_en">Titre (EN)</label><input id="at_en"><label for="al">Lieu</label><input id="al"><label for="ar">Région ou thème</label><input id="ar"><label for="ad_fr">Description (FR)</label><input id="ad_fr"><label for="ad_en">Description (EN)</label><input id="ad_en"><label for="aa">Photographe</label><input id="aa" value="Tantara Tany"><label for="af">Photo originale</label><input id="af" type="file" accept="image/*">
-<p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
+<p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Photos publiées</h3><div class="msg" id="plmsg" role="status"></div><div id="plist"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 // ====== CONFIGURATION : à remplir (voir GUIDE.md) ======
@@ -168,7 +168,7 @@ function gallery(){
   c.querySelector('small').textContent=[p.location,p.artist].filter(Boolean).join(' · ');
   c.onclick=()=>openPhoto(p);g.appendChild(c)});
 }
-async function loadPhotos(){if(!sb)return;const r=await sb.from('photos').select('*').order('created_at',{ascending:false});P=r.data||[];gallery()}
+async function loadPhotos(){if(!sb)return;const r=await sb.from('photos').select('*').order('created_at',{ascending:false});P=(r.data||[]).filter(p=>p.status==='published');gallery()}
 function openPhoto(p){cp=p;bg($('pbig'),p);$('pt').textContent=p['title_'+L]||p.title_fr;
  $('pm').textContent=[p.location,'© '+(p.artist||'Tantara Tany')].filter(Boolean).join(' · ');
  $('pd').textContent=p['desc_'+L]||p.desc_fr||'';$('pmsg').textContent='';$('photo').showModal()}
@@ -248,7 +248,30 @@ $('aup').onclick=async()=>{
  if(a.error||b.error){m.textContent=(a.error||b.error).message;return}
  const r=await sb.from('photos').insert({title_fr:v('at_fr'),title_en:v('at_en')||v('at_fr'),location:v('al'),region:v('ar'),desc_fr:v('ad_fr'),desc_en:v('ad_en'),artist:v('aa'),preview_path:id+'.jpg',original_path:id+'.'+ext});
  if(r.error){m.textContent=r.error.message;return}
- m.textContent='Photo publiée.';['at_fr','at_en','al','ar','ad_fr','ad_en','af'].forEach(i=>$(i).value='');loadPhotos()};
+ m.textContent='Photo publiée.';['at_fr','at_en','al','ar','ad_fr','ad_en','af'].forEach(i=>$(i).value='');loadPhotos().then(listPhotos)};
+function listPhotos(){
+ const l=$('plist');l.innerHTML='';
+ P.forEach(p=>{const d=document.createElement('div');d.className='box';d.textContent=p.title_fr+' ';
+  const f=document.createElement('input');f.type='file';f.accept='image/*';f.hidden=true;f.onchange=()=>replacePhoto(p,f.files[0]);
+  const r=document.createElement('button');r.className='btn';r.textContent="Remplacer l'image";r.onclick=()=>f.click();
+  const x=document.createElement('button');x.className='btn';x.textContent='Supprimer';x.onclick=()=>deletePhoto(p);
+  d.append(f,r,' ',x);l.appendChild(d)})}
+async function replacePhoto(p,f){
+ if(!f)return;const m=$('plmsg');m.textContent='Remplacement en cours…';
+ const id=crypto.randomUUID(),ext=(f.name.split('.').pop()||'jpg').toLowerCase();
+ const a=await sb.storage.from('previews').upload(id+'.jpg',await mkPreview(f),{contentType:'image/jpeg'});
+ const b=await sb.storage.from('originals').upload(id+'.'+ext,f);
+ if(a.error||b.error){m.textContent=(a.error||b.error).message;return}
+ const r=await sb.from('photos').update({preview_path:id+'.jpg',original_path:id+'.'+ext}).eq('id',p.id);
+ if(r.error){m.textContent=r.error.message;return}
+ await sb.storage.from('previews').remove([p.preview_path]);await sb.storage.from('originals').remove([p.original_path]);
+ m.textContent='Image remplacée.';await loadPhotos();listPhotos()}
+async function deletePhoto(p){
+ if(!confirm('Supprimer « '+p.title_fr+' » ?'))return;const m=$('plmsg');
+ const r=await sb.from('photos').delete().eq('id',p.id);
+ if(r.error){await sb.from('photos').update({status:'hidden'}).eq('id',p.id);m.textContent='Cette photo a des discussions ou des commandes : elle est masquée, pas supprimée.'}
+ else{await sb.storage.from('previews').remove([p.preview_path]);await sb.storage.from('originals').remove([p.original_path]);m.textContent='Photo supprimée.'}
+ await loadPhotos();listPhotos()}
 async function loadOrders(){
  const r=await sb.from('orders').select('*,photos(title_fr),profiles(name)').order('created_at',{ascending:false}),l=$('olist');l.innerHTML='';
  (r.data||[]).forEach(o=>{const d=document.createElement('div');d.className='box';
@@ -258,7 +281,7 @@ async function loadOrders(){
   if(o.status==='pending')up({status:'paid',paid_at:new Date().toISOString()},'Marquer payé');
   else if(o.payout==='todo')up({payout:'done'},'Reversement fait');
   l.appendChild(d)})}
-$('badm').onclick=()=>{$('adm').showModal();loadOrders()};
+$('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos()};
 $('bmsg').onclick=()=>openMsgs();
 // ---- Interface ----
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{L=b.dataset.l;render()});
