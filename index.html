@@ -244,7 +244,7 @@ async function loadThread(){
    if(od.status==='paid'){const b=document.createElement('button');b.className='btn p';b.textContent=t('Télécharger la photo','Download the photo');
     b.onclick=async()=>{const r=await sb.storage.from('originals').createSignedUrl(od.photos.original_path,120,{download:true});
      if(r.data)location.href=r.data.signedUrl;else alert(r.error.message)};d.append(b)}
-   else d.append(mk(t('En attente de paiement','Awaiting payment')))}
+   else d.append(mk(od.id?t('En attente de paiement','Awaiting payment'):t('Commande annulée','Order cancelled')))}
   else d.textContent=x.body;
   th.appendChild(d)});
  th.scrollTop=th.scrollHeight}
@@ -313,6 +313,10 @@ async function loadOrders(){
    b.onclick=async()=>{await sb.from('orders').update(patch).eq('id',o.id);loadOrders()};d.append(' ',b)};
   if(o.status==='pending')up({status:'paid',paid_at:new Date().toISOString()},'Marquer payé');
   else if(o.payout==='todo')up({payout:'done'},'Reversement fait');
+  const xb=document.createElement('button');xb.className='btn';xb.textContent='Supprimer';
+  xb.onclick=async()=>{if(!confirm('Supprimer cette commande'+(o.status==='paid'?' PAYÉE ? Le client perdra l\'accès au téléchargement et les chiffres du tableau de bord changeront.':' ?')+' Cette action est définitive.'))return;
+   const r=await sb.from('orders').delete().eq('id',o.id);if(r.error){alert(r.error.message);return}loadOrders();loadDash()};
+  d.append(' ',xb);
   l.appendChild(d)})}
 $('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos();loadSubs();loadDash()};
 $('bmsg').onclick=()=>openMsgs();
