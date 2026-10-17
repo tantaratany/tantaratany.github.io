@@ -151,7 +151,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 <div class="cl" id="clist"></div><div class="thr" id="thread" hidden></div>
 <div id="mbox" hidden><div class="ri"><input id="mtxt" maxlength="2000"><button class="btn p" id="send" data-fr="Envoyer" data-en="Send"></button></div><div class="msg" id="smsg" role="status"></div>
 <div id="inv" hidden><label for="iamt">Prix convenu en $ (minimum 10)</label><div class="ri"><input id="iamt" type="number" min="10" step="0.01"><button class="btn" id="mkinv">Envoyer la facture</button></div><div class="msg" id="imsg"></div></div></div></div></dialog>
-<dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Ajouter une photo</h3>
+<dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Tableau de bord</h3><div class="cols" id="dash"></div><h3>Membres</h3><div id="mlist"></div><h3>Ajouter une photo</h3>
 <label for="at_fr">Titre (FR)</label><input id="at_fr"><label for="at_en">Titre (EN)</label><input id="at_en"><label for="al">Lieu</label><input id="al"><label for="ar">Région ou thème</label><input id="ar"><label for="ad_fr">Description (FR)</label><input id="ad_fr"><label for="ad_en">Description (EN)</label><input id="ad_en"><label for="aa">Photographe</label><input id="aa" value="Tantara Tany"><label for="af">Photo originale</label><input id="af" type="file" accept="image/*">
 <p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Soumissions à valider</h3><div id="sublist"></div><h3>Photos publiées</h3><div class="msg" id="plmsg" role="status"></div><div id="plist"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -307,9 +307,19 @@ async function loadOrders(){
   if(o.status==='pending')up({status:'paid',paid_at:new Date().toISOString()},'Marquer payé');
   else if(o.payout==='todo')up({payout:'done'},'Reversement fait');
   l.appendChild(d)})}
-$('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos();loadSubs()};
+$('badm').onclick=()=>{$('adm').showModal();loadOrders();listPhotos();loadSubs();loadDash()};
 $('bmsg').onclick=()=>openMsgs();
 const msgEl=()=>isAdm()?$('plmsg'):$('ph_upmsg');
+async function loadDash(){
+ const c=async(tb,f)=>{let q=sb.from(tb).select('*',{count:'exact',head:true});if(f)q=f(q);const r=await q;return r.count||0};
+ const v=await Promise.all([c('profiles'),c('photographers'),c('photos',q=>q.eq('status','published')),c('photos',q=>q.eq('status','pending')),c('orders',q=>q.eq('status','paid')),c('orders',q=>q.eq('status','pending'))]);
+ const lab=['Membres','Photographes','Photos publiées','Photos à valider','Commandes payées','Commandes en attente'],d=$('dash');d.innerHTML='';
+ v.forEach((n,i)=>{const b=document.createElement('div');b.className='box';b.innerHTML='<h3></h3><p></p>';b.querySelector('h3').textContent=n;b.querySelector('p').textContent=lab[i];d.appendChild(b)});
+ const r=await sb.from('profiles').select('id,name,email,role,created_at,photographers(pseudo)').order('created_at',{ascending:false}).limit(100),l=$('mlist');l.innerHTML='';
+ if(r.error){l.textContent='Erreur : '+r.error.message;return}
+ (r.data||[]).forEach(u=>{const g=Array.isArray(u.photographers)?u.photographers[0]:u.photographers,e=document.createElement('div');e.className='box';
+  const type=u.role==='admin'?'Administrateur':(g?'Photographe ('+g.pseudo+')':'Client');
+  e.textContent=(u.name||'Sans nom')+' · '+(u.email||'e-mail inconnu')+' · '+type+' · inscrit le '+(u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—');l.appendChild(e)})}
 async function loadSubs(){
  const r=await sb.from('photos').select('*,photographers(pseudo,full_name,phone,contact_email,mvola)').eq('status','pending').order('created_at'),l=$('sublist');l.innerHTML='';
  if(!(r.data||[]).length)l.textContent='Aucune soumission.';
