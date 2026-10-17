@@ -61,7 +61,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 .meta{color:var(--mut);font-size:.92rem;margin:4px 0 12px}
 @media(max-width:760px){.welcome{grid-template-columns:1fr;gap:28px}nav{flex-wrap:wrap}.nr a.l{padding:4px 6px;font-size:.82rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}.ph{background:none;aspect-ratio:auto}.ph img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}.grid{align-items:start}#photo{width:min(900px,96vw)}.ph.big{margin-bottom:16px}.db ol{margin:0 0 20px;padding-left:20px;color:var(--mut)}.db ol li{margin:6px 0}input[type=checkbox]{width:auto;margin:3px 0 0}label.chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink);margin:14px 0}</style></head><body>
+[hidden]{display:none!important}.cl{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.thr{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.m{max-width:88%;padding:8px 12px;border-radius:12px;background:var(--surf);border:1px solid var(--line)}.m.me{align-self:flex-end;background:#f08a2c33}.m div{font-size:.9rem;color:var(--mut)}.m .btn{margin-top:8px}.ri{display:flex;gap:8px;margin-top:10px}.ri input{flex:1}#adm .box{margin:8px 0;font-size:.9rem}#adm h3{margin:18px 0 6px}.ph{background:none;aspect-ratio:auto}.ph img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}.grid{align-items:start}#photo{width:min(900px,96vw)}.ph.big{margin-bottom:16px}.db ol{margin:0 0 20px;padding-left:20px;color:var(--mut)}.db ol li{margin:6px 0}input[type=checkbox]{width:auto;margin:3px 0 0}label.chk{display:flex;gap:8px;align-items:flex-start;color:var(--ink);margin:14px 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center}.stat b{display:block;font:600 2rem 'Cormorant Garamond',serif;color:var(--ember);line-height:1.1}.stat span{font-size:.78rem;color:var(--mut)}.tw{overflow-x:auto}table.t{width:100%;border-collapse:collapse;font-size:.86rem}.t th{text-align:left;color:var(--mut);font-weight:500;padding:8px 6px;border-bottom:1px solid var(--line)}.t td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top;word-break:break-word}.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.76rem;border:1px solid var(--line)}.tag.phg{border-color:var(--ember);color:var(--ember)}.tag.adm{background:var(--ink);color:#1b0d05;border-color:var(--ink)}</style></head><body>
 <nav>
  <a class="logo" href="#">Tantara Tany</a>
  <div class="nr">
@@ -151,7 +151,7 @@ input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line
 <div class="cl" id="clist"></div><div class="thr" id="thread" hidden></div>
 <div id="mbox" hidden><div class="ri"><input id="mtxt" maxlength="2000"><button class="btn p" id="send" data-fr="Envoyer" data-en="Send"></button></div><div class="msg" id="smsg" role="status"></div>
 <div id="inv" hidden><label for="iamt">Prix convenu en $ (minimum 10)</label><div class="ri"><input id="iamt" type="number" min="10" step="0.01"><button class="btn" id="mkinv">Envoyer la facture</button></div><div class="msg" id="imsg"></div></div></div></div></dialog>
-<dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Tableau de bord</h3><div class="cols" id="dash"></div><h3>Membres</h3><div id="mlist"></div><h3>Ajouter une photo</h3>
+<dialog id="adm" style="width:min(760px,94vw)"><div class="db"><button class="x" data-close aria-label="Fermer">×</button><h3>Tableau de bord</h3><div class="stats" id="dash"></div><h3>Membres</h3><div class="tw" id="mlist"></div><h3>Ajouter une photo</h3>
 <label for="at_fr">Titre (FR)</label><input id="at_fr"><label for="at_en">Titre (EN)</label><input id="at_en"><label for="al">Lieu</label><input id="al"><label for="ar">Région ou thème</label><input id="ar"><label for="ad_fr">Description (FR)</label><input id="ad_fr"><label for="ad_en">Description (EN)</label><input id="ad_en"><label for="aa">Photographe</label><input id="aa" value="Tantara Tany"><label for="af">Photo originale</label><input id="af" type="file" accept="image/*">
 <p><button class="btn p" id="aup">Publier</button></p><div class="msg" id="amsg2" role="status"></div><h3>Soumissions à valider</h3><div id="sublist"></div><h3>Photos publiées</h3><div class="msg" id="plmsg" role="status"></div><div id="plist"></div><h3>Commandes</h3><div id="olist"></div></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -313,13 +313,21 @@ const msgEl=()=>isAdm()?$('plmsg'):$('ph_upmsg');
 async function loadDash(){
  const c=async(tb,f)=>{let q=sb.from(tb).select('*',{count:'exact',head:true});if(f)q=f(q);const r=await q;return r.count||0};
  const v=await Promise.all([c('profiles'),c('photographers'),c('photos',q=>q.eq('status','published')),c('photos',q=>q.eq('status','pending')),c('orders',q=>q.eq('status','paid')),c('orders',q=>q.eq('status','pending'))]);
- const lab=['Membres','Photographes','Photos publiées','Photos à valider','Commandes payées','Commandes en attente'],d=$('dash');d.innerHTML='';
- v.forEach((n,i)=>{const b=document.createElement('div');b.className='box';b.innerHTML='<h3></h3><p></p>';b.querySelector('h3').textContent=n;b.querySelector('p').textContent=lab[i];d.appendChild(b)});
+ const lab=['Membres','Photographes','Photos en ligne','Photos à valider','Commandes payées','En attente de paiement'],d=$('dash');d.innerHTML='';
+ v.forEach((n,i)=>{const b=document.createElement('div');b.className='stat';const x=document.createElement('b');x.textContent=n;const s=document.createElement('span');s.textContent=lab[i];b.append(x,s);d.appendChild(b)});
  const r=await sb.from('profiles').select('id,name,email,role,created_at,photographers(pseudo)').order('created_at',{ascending:false}).limit(100),l=$('mlist');l.innerHTML='';
  if(r.error){l.textContent='Erreur : '+r.error.message;return}
- (r.data||[]).forEach(u=>{const g=Array.isArray(u.photographers)?u.photographers[0]:u.photographers,e=document.createElement('div');e.className='box';
-  const type=u.role==='admin'?'Administrateur':(g?'Photographe ('+g.pseudo+')':'Client');
-  e.textContent=(u.name||'Sans nom')+' · '+(u.email||'e-mail inconnu')+' · '+type+' · inscrit le '+(u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—');l.appendChild(e)})}
+ const rows=r.data||[];
+ if(!rows.length){l.textContent='Aucun membre pour le moment.';return}
+ const tb=document.createElement('table');tb.className='t';
+ tb.innerHTML='<thead><tr><th>Membre</th><th>Type</th><th>Inscrit le</th></tr></thead><tbody></tbody>';
+ rows.forEach(u=>{const g=Array.isArray(u.photographers)?u.photographers[0]:u.photographers,tr=document.createElement('tr');
+  const a=document.createElement('td'),n=document.createElement('b'),m=document.createElement('div');n.textContent=u.name||'Sans nom';m.textContent=u.email||'e-mail inconnu';m.style.color='var(--mut)';a.append(n,m);
+  const b=document.createElement('td'),tag=document.createElement('span');tag.className='tag '+(u.role==='admin'?'adm':g?'phg':'');tag.textContent=u.role==='admin'?'Admin':g?'Photographe':'Client';b.appendChild(tag);
+  if(g&&g.pseudo){const p=document.createElement('div');p.textContent=g.pseudo;p.style.color='var(--mut)';b.appendChild(p)}
+  const c2=document.createElement('td');c2.textContent=u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—';
+  tr.append(a,b,c2);tb.querySelector('tbody').appendChild(tr)});
+ l.appendChild(tb)}
 async function loadSubs(){
  const r=await sb.from('photos').select('*,photographers(pseudo,full_name,phone,contact_email,mvola)').eq('status','pending').order('created_at'),l=$('sublist');l.innerHTML='';
  if(!(r.data||[]).length)l.textContent='Aucune soumission.';
