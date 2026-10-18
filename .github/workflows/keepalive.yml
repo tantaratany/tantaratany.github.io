@@ -7,4 +7,6 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -fsS "https://qnurvikhtttmjshufyeo.supabase.co/rest/v1/photos?select=id&limit=1" -H "apikey: sb_publishable_4YcsOCuqtlQ5bAe8Rpmqtw_NAE7qGH8"
+      - name: Ping Supabase
+        run: |
+          curl -fsS "https://qnurvikhtttmjshufyeo.supabase.co/rest/v1/photos?select=id&limit=1" -H "apikey: sb_publishable_4YcsOCuqtlQ5bAe8Rpmqtw_NAE7qGH8"
